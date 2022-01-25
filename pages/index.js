@@ -124,7 +124,7 @@ export default function HomePage() {
                 neutral: {
                   textColor: appConfig.theme.colors.neutrals[200],
                   mainColor: appConfig.theme.colors.neutrals[900],
-                  mainColorHighlight: appConfig.theme.colors.primary[500],
+                  mainColorHighlight: appConfig.theme.colors.primary[300],
                   backgroundColor: appConfig.theme.colors.neutrals[800],
                 },
               }}
