@@ -1,5 +1,5 @@
 import { Box, Button, Text, TextField, Image } from "@skynexui/components";
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import appConfig from "../config.json";
 
@@ -33,7 +33,7 @@ function Title(props) {
 
 export default function HomePage() {
   // const username = "OtavioCanedo";
-  const [username, setUsername] = React.useState('OtavioCanedo');
+  const [username, setUsername] = useState('OtavioCanedo');
   const roteamento = useRouter();
 
   return (
