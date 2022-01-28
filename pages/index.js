@@ -1,6 +1,6 @@
 import { Box, Button, Text, TextField, Image } from "@skynexui/components";
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter, router } from 'next/router';
 import appConfig from "../config.json";
 
 function Title(props) {
@@ -73,8 +73,8 @@ export default function HomePage() {
             as="form"
             onSubmit={function (infosDoEvento){
               infosDoEvento.preventDefault();
-              console.log('Form foi submetido');
-              {username.length > 2 ? roteamento.push('/chat') : alert('Usuário não encontrado!')};
+              // console.log('Form foi submetido');
+              {username.length > 2 ? roteamento.push(`/chat?username=${username}`) : alert('Usuário não encontrado!')};
             }}
             styleSheet={{
               display: "flex",

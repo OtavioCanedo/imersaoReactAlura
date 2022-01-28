@@ -1,24 +1,75 @@
 import { Box, Text, TextField, Image, Button } from "@skynexui/components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import appConfig from "../config.json";
+import { useRouter } from 'next/router';
+import { createClient } from '@supabase/supabase-js'
+
+// Como fazer AJAX: https://medium.com/@omariosouto/entendendo-como-fazer-ajax-com-a-fetchapi-977ff20da3c6
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function ChatPage() {
   // Sua lógica vai aqui
+  supabaseClient
+    .from('mensagens')
+    .select('*')
+    .then((dados) => {
+      console.log('Dados da consulta:', dados);
+    });
+
   const [mensagem, setMensagem] = useState("");
   const [listaDeMensagens, setListaDeMensagens] = useState([]);
+  const roteamento = useRouter();
+  const { username } = roteamento.query;
+
+  /*
+    Usuário
+  - Digita no campo textarea
+  - Aperta enter para enviar 
+  - Tem que adicionar o texto na listagem
+
+    Dev
+  - [X] Campo criado
+  - [X] Usar o onChange e o useState(ter if para caso seja enter para limpar a variavel)
+  - [X] Lista de mensagens  
+  */
+
+  useEffect(() => {
+    supabaseClient
+      .from('mensagens')
+      .select('*')
+      .order('id', {ascending: false })
+      .then(({ data }) => {
+        console.log('Dados da consulta:', data);
+        setListaDeMensagens(data);
+      });
+  }, []);
 
   function handleNovaMensagem(novaMensagem) {
     const mensagem = {
-      id: listaDeMensagens.length + 1,
-      de: 'OtavioCanedo',
+      // id: listaDeMensagens.length + 1,
+      de: (username),
       texto: novaMensagem,
     };
-    // Chamada de um backend
-    setListaDeMensagens([
-        mensagem,
-        ...listaDeMensagens, 
-    ]);
-    setMensagem("");
+
+    supabaseClient
+      .from('mensagens')
+      .insert([
+        // Tem que ser um objeto com os mesmos campos que escreveu no supabase
+        mensagem
+      ])
+      .then(({ data }) => {
+        console.log('Criando mensagem: ', data);
+        // Chamada de um backend
+        setListaDeMensagens([
+            data[0],
+            ...listaDeMensagens, 
+        ]);
+      })
+      
+      setMensagem("");
   }
   // ./Sua lógica vai aqui
   return (
@@ -42,9 +93,9 @@ export default function ChatPage() {
           flex: 1,
           boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
           borderRadius: "5px",
-          backgroundColor: appConfig.theme.colors.neutrals[700],
+          // backgroundColor: appConfig.theme.colors.neutrals[700],
           height: "100%",
-          maxWidth: "95%",
+          maxWidth: "75%", //"95%"
           maxHeight: "95vh",
           padding: "32px",
         }}
@@ -196,7 +247,7 @@ function MessageList(props) {
                   display: "inline-block",
                   marginRight: "8px",
                 }}
-                src={`https://github.com/OtavioCanedo.png`}
+                src={`https://github.com/${mensagem.de}.png`}
               />
               <Text tag="strong">{mensagem.de}</Text>
               <Text
