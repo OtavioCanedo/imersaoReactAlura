@@ -181,17 +181,6 @@ export default function ChatPage() {
   );
 }
 
-export const getServerSideProps = async () => {
-  const { SUPABASE_ANON_KEY, SUPABASE_URL } = process.env;
-
-  return {
-    props: {
-      SUPABASE_ANON_KEY,
-      SUPABASE_URL,
-    },
-  };
-};
-
 function Header() {
   return (
     <>
