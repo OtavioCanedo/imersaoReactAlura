@@ -3,21 +3,21 @@ import React, { useState } from 'react';
 import { useRouter, router } from 'next/router';
 import appConfig from "../config.json";
 
-function Title(props) {
-  const Tag = props.tag || 'h1';
-  return (
-    <>
-      <Tag>{props.children}</Tag>
-      <style jsx>{`
-        ${Tag} {
-          color: ${appConfig.theme.colors.neutrals["000"]};
-          font-size: 24px;
-          font-weight: 600;
-        }
-      `}</style>
-    </>
-  );
-}
+// function Title(props) {
+//   const Tag = props.tag || 'h1';
+//   return (
+//     <>
+//       <Tag>{props.children + `${username}`}</Tag>
+//       <style jsx>{`
+//         ${Tag} {
+//           color: ${appConfig.theme.colors.neutrals["000"]};
+//           font-size: 24px;
+//           font-weight: 600;
+//         }
+//       `}</style>
+//     </>
+//   );
+// }
 
 // function HomePage() {
 //   return (
@@ -33,8 +33,24 @@ function Title(props) {
 
 export default function HomePage() {
   // const username = "OtavioCanedo";
-  const [username, setUsername] = useState('OtavioCanedo');
+  const [username, setUsername] = useState('');
   const roteamento = useRouter();
+  
+  function Title(props) {
+    const Tag = props.tag || 'h1';
+    return (
+    <>
+      <Tag>{props.children + `${username}` + '!'}</Tag>
+      <style jsx>{`
+        ${Tag} {
+          color: ${appConfig.theme.colors.neutrals["000"]};
+          font-size: 24px;
+          font-weight: 600;
+        }
+      `}</style>
+    </>
+    );
+  }
 
   return (
     <>
@@ -65,7 +81,6 @@ export default function HomePage() {
             padding: "32px",
             margin: "16px",
             boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
-            backgroundColor: appConfig.theme.colors.neutrals[700],
           }}
         >
           {/* Formulário */}
@@ -86,7 +101,7 @@ export default function HomePage() {
               marginBottom: "32px",
             }}
           >
-            <Title tag="h2">Saudações invocador!</Title>
+            <Title tag="h1">Saudações Invocador </Title>
             <Text
               variant="body3"
               styleSheet={{
@@ -112,7 +127,7 @@ export default function HomePage() {
             <TextField
               value={username}
               onChange={function Handler(event){
-                console.log('usuario digitou', event.target.value);
+                // console.log('usuario digitou', event.target.value);
                 // Onde ta o valor?
                 const valor = event.target.value;
                 // Trocar o valor da variavel através do React
@@ -135,9 +150,9 @@ export default function HomePage() {
               fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["999"],
-                mainColor: appConfig.theme.colors.primary[600],
+                mainColor: appConfig.theme.colors.primary[300],
                 mainColorLight: appConfig.theme.colors.primary[400],
-                mainColorStrong: appConfig.theme.colors.primary[300],
+                mainColorStrong: appConfig.theme.colors.primary[600],
               }}
             />
           </Box>
@@ -151,9 +166,8 @@ export default function HomePage() {
               alignItems: "center",
               maxWidth: "200px",
               padding: "16px",
-              backgroundColor: appConfig.theme.colors.neutrals[800],
               border: "1px solid",
-              borderColor: appConfig.theme.colors.neutrals[999],
+              borderColor: appConfig.theme.colors.primary[300],
               borderRadius: "10px",
               flex: 1,
               minHeight: "240px",
@@ -164,13 +178,12 @@ export default function HomePage() {
                 borderRadius: "50%",
                 marginBottom: "16px",
               }}
-              src={username.length > 2 ? `https://github.com/${username}.png` : 'https://i.ibb.co/Ch4m85T/erro.png'} 
+              src={username.length > 2 ? `https://github.com/${username}.png` : 'https://i.ibb.co/1z5xC0s/icone.png'} 
             />
             <Text
               variant="body4"
               styleSheet={{
-                color: appConfig.theme.colors.neutrals[200],
-                backgroundColor: appConfig.theme.colors.neutrals[900],
+                color: appConfig.theme.colors.primary[300],
                 padding: "3px 10px",
                 borderRadius: "1000px",
               }}
