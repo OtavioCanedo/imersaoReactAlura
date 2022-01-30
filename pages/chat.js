@@ -49,7 +49,7 @@ export default function ChatPage() {
         setListaDeMensagens(data);
       });
 
-    escutaMensagensEmTempoReal((novaMensagem) => {
+    const subscription = escutaMensagensEmTempoReal((novaMensagem) => {
       console.log('Nova mensagem:', novaMensagem);
       // Chamada de um backend
       setListaDeMensagens((valorAtualLista) => {
@@ -59,6 +59,11 @@ export default function ChatPage() {
         ]
       });
     });
+
+    return () => {
+      subscription.unsubscribe();
+    }
+
   }, []);
 
   function handleNovaMensagem(novaMensagem) {
