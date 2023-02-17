@@ -1,4 +1,4 @@
-# imersaoReactAlura
+# Imersao React Alura
 O projeto é uma chat que simula o discord, o login é feito com o usuário do Github. Foi criado com intuito de aprender o
 framework Next.js e estudar um pouco mais sobre o React. Foi utilizado Next.js, React.js, SkynexUI, Supabase, Vercel e
 CSS3. Feito na semana de Imersão React com a Alura, em janeiro de 2022. Foi um projeto que trouxe o aprendizado da
