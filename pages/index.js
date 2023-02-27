@@ -1,38 +1,9 @@
 import { Box, Button, Text, TextField, Image } from "@skynexui/components";
 import React, { useState } from 'react';
-import { useRouter, router } from 'next/router';
+import { useRouter } from 'next/router';
 import appConfig from "../config.json";
 
-// function Title(props) {
-//   const Tag = props.tag || 'h1';
-//   return (
-//     <>
-//       <Tag>{props.children + `${username}`}</Tag>
-//       <style jsx>{`
-//         ${Tag} {
-//           color: ${appConfig.theme.colors.neutrals["000"]};
-//           font-size: 24px;
-//           font-weight: 600;
-//         }
-//       `}</style>
-//     </>
-//   );
-// }
-
-// function HomePage() {
-//   return (
-//     <div>
-//       <GlobalStyle />
-//       <Title tag="h1">Boas vindas de volta!</Title>
-//       <h2>Discord - Alura Matrix</h2>
-//     </div>
-//   )
-// }
-
-// export default HomePage
-
 export default function HomePage() {
-  // const username = "OtavioCanedo";
   const [username, setUsername] = useState('');
   const roteamento = useRouter();
   
@@ -83,12 +54,10 @@ export default function HomePage() {
             boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
           }}
         >
-          {/* Formulário */}
           <Box
             as="form"
             onSubmit={function (infosDoEvento){
               infosDoEvento.preventDefault();
-              // console.log('Form foi submetido');
               {username.length > 2 ? roteamento.push(`/chat?username=${username}`) : alert('Usuário não encontrado!')};
             }}
             styleSheet={{
@@ -112,26 +81,10 @@ export default function HomePage() {
               {appConfig.name}
             </Text>
 
-            {/* <input 
-                type="text"
-                value={username}
-                onChange={function Handler(event){
-                  console.log('usuario digitou', event.target.value);
-                  // Onde ta o valor?
-                  const valor = event.target.value;
-                  // Trocar o valor da variavel através do React
-                  setUsername(valor);
-                }}
-            /> */}
-
             <TextField
               value={username}
-              onChange={function Handler(event){
-                // console.log('usuario digitou', event.target.value);
-                // Onde ta o valor?
-                const valor = event.target.value;
-                // Trocar o valor da variavel através do React
-                setUsername(valor);
+              onChange={function Handler(e){
+                setUsername(e.target.value);
               }}
               placeholder="Digite seu usuário do Github"
               fullWidth
@@ -156,9 +109,7 @@ export default function HomePage() {
               }}
             />
           </Box>
-          {/* Formulário */}
 
-          {/* Photo Area */}
           <Box
             styleSheet={{
               display: "flex",
@@ -191,7 +142,7 @@ export default function HomePage() {
               {username.length > 2 ? `${username}` : 'Usuário inválido'}
             </Text>
           </Box>
-          {/* Photo Area */}
+          
         </Box>
       </Box>
     </>
